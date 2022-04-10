@@ -18,7 +18,7 @@ class Item {
 
 
 class Customer extends Item {
-  constructor(id, name, email) {
+  constructor(id, name, email, age) {
     super(id);
 
     this.name = name;
@@ -48,9 +48,18 @@ class Storage {
   }
 
   insert(item) {
-    item.id = this._currId;
-    this._currId++;
-    this._list.push(item);
+    try {
+      item.id = this._currId;
+      this._currId++;
+      this._list.push(item);
+
+      return true;
+    } catch(err) {
+      console.error(err);
+
+      return false;
+    }
+    
   }
 
   deleteById(id) {
@@ -63,7 +72,8 @@ class Storage {
 
   selectById(id) {
     const idx = this._findIdx(id);
-    return this._list[idx].getJSON();
+
+    return this._list[idx] ? this._list[idx].getJSON() : {};
   }
 
   selectAll() {

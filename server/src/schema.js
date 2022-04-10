@@ -45,8 +45,8 @@ const mutation = new GraphQLObjectType({
         age: {type: new GraphQLNonNull(GraphQLInt)},
       },
       resolve(parentValue, args) {
-        const {id, name, email} = args;
-        return customers.insert(new Customer(id, name, email));
+        const {id, name, email, age} = args;
+        return customers.insert(new Customer(id, name, email, age));
       }
     },
     deleteCustomer: {
