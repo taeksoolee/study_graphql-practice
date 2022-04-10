@@ -1,3 +1,8 @@
+# Dependency
+``` shell
+npm install --save @apollo/react-hooks graphql-tag apollo-client apollo-cache-inmemory apollo-link-http graphql react-apollo
+```
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
