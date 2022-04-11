@@ -2,7 +2,11 @@ const { customerStorage } = require('../storage');
 
 const Customer = require('../storage/model/Customer');
 
-const { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLBoolean, GraphQLList, GraphQLNonNull, GraphQLSchema } = require('graphql');
+const { 
+  GraphQLObjectType, 
+  GraphQLString, GraphQLInt, GraphQLBoolean, 
+  GraphQLList, GraphQLNonNull, GraphQLSchema 
+} = require('graphql');
 
 const CustomerType = new GraphQLObjectType({
   name: 'Customer',
