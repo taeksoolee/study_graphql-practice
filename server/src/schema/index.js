@@ -1,6 +1,8 @@
-const {Customer, customers} = require('./storage');
+const { customerStorage } = require('../storage');
 
-const { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLList, GraphQLNonNull, GraphQLSchema } = require('graphql');
+const Customer = require('../storage/model/Customer');
+
+const { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLBoolean, GraphQLList, GraphQLNonNull, GraphQLSchema } = require('graphql');
 
 const CustomerType = new GraphQLObjectType({
   name: 'Customer',
@@ -18,17 +20,17 @@ const RootQuery = new GraphQLObjectType({
     customer: {
       type: CustomerType,
       args: {
-        id: {type: GraphQLString},
+        id: {type: GraphQLInt},
       },
       resolve(parentValue, args) {
-        return customers.selectById(args.id);
+        return customerStorage.selectById(args.id);
 
       }
     },
     customers: {
       type: new GraphQLList(CustomerType),
       resolve(parentValue, args) {
-        return customers.selectAll();
+        return customerStorage.selectAll();
       }
     }
   }
@@ -38,7 +40,7 @@ const mutation = new GraphQLObjectType({
   name: 'Mutation',
   fields: {
     addCustomer: {
-      type: CustomerType,
+      type: GraphQLBoolean,
       args: {
         name: {type: new GraphQLNonNull(GraphQLString)},
         email: {type: new GraphQLNonNull(GraphQLString)},
@@ -46,7 +48,7 @@ const mutation = new GraphQLObjectType({
       },
       resolve(parentValue, args) {
         const {id, name, email, age} = args;
-        return customers.insert(new Customer(id, name, email, age));
+        return customerStorage.insert(new Customer(id, name, email, age));
       }
     },
     deleteCustomer: {
@@ -55,7 +57,7 @@ const mutation = new GraphQLObjectType({
         id: {type: new GraphQLNonNull(GraphQLInt)},
       },
       resolve(parentValue, args) {
-        return customers.deleteById(args.id);
+        return customerStorage.deleteById(args.id);
       }
     }
   }
